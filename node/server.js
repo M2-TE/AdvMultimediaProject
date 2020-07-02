@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require('path');
 
 // get root directory
-const rootDir = './..';
+const rootDir = `${__dirname}/..`;
 
 // read cli args
 const args = process.argv.slice(2);
