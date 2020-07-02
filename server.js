@@ -1,11 +1,14 @@
 const https = require('https');
 const url = require('url');
 const fs = require('fs');
-var path = require('path')
-var baseDirectory = __dirname   // or whatever base directory you want
+const path = require('path');
 
-var port = 8000
+// read cli args
+const args = process.argv.slice(2);
+const port = args[0] == null ? 8000 : args[0];
+const baseDirectory = args[1] == null ? 'dist' : args[1];
 
+// get ssl certificate and key
 const options = {
     key: fs.readFileSync('key.pem'),
     cert: fs.readFileSync('cert.pem')
@@ -13,36 +16,29 @@ const options = {
 
 https.createServer(options, function (request, response) {
     try {
-        const newUrl = new URL(request.url, `http://${request.headers.host}`);
-        console.log(request.url);
-        console.log(newUrl);
+        // get more accurate url info
+        const urlInfo = new URL(request.url, `http://${request.headers.host}`);
+        // reroute to index.html on '/' route
+        const urlPath = urlInfo.pathname == '/' ? '/index.html' : urlInfo.pathname;
 
-        let actualUrl = newUrl.pathname;
-        if (newUrl.pathname == '/') {
-            actualUrl = '/index.html';
-        }
+        const requestUrl = url.parse(urlPath);
+        const fsPath = baseDirectory + path.normalize(requestUrl.pathname);
 
-        var requestUrl = url.parse(actualUrl)
-
-        // TODOD: change vars
-
-        // need to use path.normalize so people can't access directories underneath baseDirectory
-        var fsPath = baseDirectory + path.normalize(requestUrl.pathname)
-
-        var fileStream = fs.createReadStream(fsPath)
-        fileStream.pipe(response)
+        const fileStream = fs.createReadStream(fsPath);
+        fileStream.pipe(response);
         fileStream.on('open', function () {
-            response.writeHead(200)
+            response.writeHead(200);
         })
         fileStream.on('error', function (e) {
-            response.writeHead(404)     // assume the file doesn't exist
-            response.end()
+            response.writeHead(404);
+            response.end();
         })
     } catch (e) {
-        response.writeHead(500)
-        response.end()     // end the response so browsers don't hang
-        console.log(e.stack)
+        // end on server-side error
+        response.writeHead(500);
+        response.end();
+        console.log(e.stack);
     }
-}).listen(port)
+}).listen(port);
 
-console.log("listening on port " + port)
+console.log("listening on port " + port);
