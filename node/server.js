@@ -3,23 +3,31 @@ const url = require('url');
 const fs = require('fs');
 const path = require('path');
 
+// get root directory
+const rootDir = './..';
+
 // read cli args
 const args = process.argv.slice(2);
 const port = args[0] == null ? 8000 : args[0];
-const baseDirectory = args[1] == null ? 'dist' : args[1];
+const baseDirectory = args[1] == null
+    ? `${rootDir}/dist`
+    : `${rootDir}/${args[1]}`;
 
 // get ssl certificate and key
 const options = {
-    key: fs.readFileSync('key.pem'),
-    cert: fs.readFileSync('cert.pem')
+    key: fs.readFileSync(`${rootDir}/ssl/key.pem`),
+    cert: fs.readFileSync(`${rootDir}/ssl/cert.pem`)
 };
 
 https.createServer(options, function (request, response) {
     try {
         // get more accurate url info
         const urlInfo = new URL(request.url, `http://${request.headers.host}`);
+
         // reroute to index.html on '/' route
-        const urlPath = urlInfo.pathname == '/' ? '/index.html' : urlInfo.pathname;
+        const urlPath = urlInfo.pathname == '/'
+            ? '/index.html'
+            : urlInfo.pathname;
 
         const requestUrl = url.parse(urlPath);
         const fsPath = baseDirectory + path.normalize(requestUrl.pathname);
