@@ -1,8 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
-    .BundleAnalyzerPlugin;
 
 module.exports = {
     entry: './src/index.tsx',
@@ -30,9 +28,6 @@ module.exports = {
             template: './public/index.html',
             inject: 'head'
         }),
-        new CopyPlugin([{ from: 'public', ignore: ['index.html'] }]),
-        new BundleAnalyzerPlugin({
-            analyzerMode: process.env.ANALYZE ? 'server' : 'disabled'
-        })
+        new CopyPlugin([{ from: 'public', ignore: ['index.html'] }])
     ]
 };
