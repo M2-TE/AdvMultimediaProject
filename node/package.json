@@ -3,8 +3,8 @@
 	"version": "0.0.1",
 	"description": "",
 	"scripts": {
-		"sample": "node server.js 8000 ./../dist_sample",
-		"https": "node server.js 8000 ./dist",
+		"https_sample": "node server.js 8000 ./../dist_sample",
+		"https": "node server.js 8000 dist",
 		"build": "webpack --mode production",
 		"start": "webpack-dev-server --mode development --open --history-api-fallback",
 		"test": "jest --coverage --forceExit",
