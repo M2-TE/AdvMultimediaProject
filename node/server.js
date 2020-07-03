@@ -9,9 +9,7 @@ const rootDir = `${__dirname}/..`;
 // read cli args
 const args = process.argv.slice(2);
 const port = args[0] == null ? 8000 : args[0];
-const baseDirectory = args[1] == null
-    ? `${rootDir}/dist`
-    : `${rootDir}/${args[1]}`;
+const baseDirectory = args[1] == null ? dist : args[1];
 
 // get ssl certificate and key
 const options = {
