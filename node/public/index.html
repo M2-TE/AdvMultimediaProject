@@ -157,12 +157,20 @@
             </div>
         </footer>
     </div>
+
+    <!-- Including bootstrap js -->
     <script src="bootstrap/assets/js/jquery.min.js"></script>
     <script src="bootstrap/assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="bootstrap/assets/js/Sidebar-Menu.js"></script>
 
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-    <script type="text/javascript" src="bundle.min.js"> </script>
+    <!-- Including bundled typescript for SimpleWebRTC -->
+    <script type="text/javascript" src="bundle.min.js"></script>
+
+    <!-- Interacting with SimpleWebRTC -->
+    <script type="text/javascript">
+        const roomName = 'derp';
+        SimpleWebRTC.run({ roomName });
+    </script>
 </body>
 
 </html>
