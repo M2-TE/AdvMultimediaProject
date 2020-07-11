@@ -11,6 +11,7 @@ const CONFIG_URL = `https://api.simplewebrtc.com/config/guest/${API_KEY}`;
 const store = SWRTC.createStore();
 
 if (document.getElementById('app') != null) {
+    console.log('app found');
     ReactDOM.render(
         <Provider store={store}>
             <SWRTC.Provider configUrl={CONFIG_URL}>
@@ -20,7 +21,6 @@ if (document.getElementById('app') != null) {
                 </SWRTC.Connecting>
 
                 <SWRTC.Connected>
-                    <h1>Connected!</h1>
                     {/* Request the user's media */}
                     <SWRTC.RequestUserMedia audio video auto />
 
@@ -30,8 +30,11 @@ if (document.getElementById('app') != null) {
                     {/* Connect to a room with a name and optional password */}
                     <SWRTC.Room name={ROOM_NAME} password={ROOM_PASSWORD}>
                         {props => {
-                            /* Use the rest of the SWRTC React Components to render your UI */
-                            return <p>wee woo room</p>;
+
+                            return <h1 className="border rounded-0 mb-5" style={{ color: "white", filter: "blur(0px)" }}>
+                                Create your own chat room to play your favorite boardgames over the internet with tools like the
+                                DICE
+                                    </h1>
                         }}
                     </SWRTC.Room>
                 </SWRTC.Connected>
@@ -39,4 +42,6 @@ if (document.getElementById('app') != null) {
         </Provider>,
         document.getElementById('app')
     );
+} else {
+    console.log('no app found');
 }
