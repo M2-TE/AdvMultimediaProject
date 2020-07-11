@@ -3,6 +3,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import * as SWRTC from '@andyet/simplewebrtc';
 
+import styled, { css } from 'styled-components';
+import MediaPreview from './components/mediaPreview';
+
 const API_KEY = '413edda4665ecafd9710bee2';
 const ROOM_NAME = 'derp';
 const ROOM_PASSWORD = '';
@@ -10,8 +13,20 @@ const CONFIG_URL = `https://api.simplewebrtc.com/config/guest/${API_KEY}`;
 
 const store = SWRTC.createStore();
 
-if (document.getElementById('app') != null) {
-    console.log('app found');
+const Preview = styled.div({
+    gridArea: 'preview',
+    display: 'flex',
+    alignItems: 'flex-end',
+    flexDirection: 'column'
+});
+
+interface RunParams {
+    roomName: string;
+}
+
+const run = ({
+    roomName
+}: RunParams) => {
     ReactDOM.render(
         <Provider store={store}>
             <SWRTC.Provider configUrl={CONFIG_URL}>
@@ -28,13 +43,16 @@ if (document.getElementById('app') != null) {
                     <SWRTC.RemoteAudioPlayer />
 
                     {/* Connect to a room with a name and optional password */}
-                    <SWRTC.Room name={ROOM_NAME} password={ROOM_PASSWORD}>
+                    <SWRTC.Room name={roomName} password={ROOM_PASSWORD}>
                         {props => {
 
-                            return <h1 className="border rounded-0 mb-5" style={{ color: "white", filter: "blur(0px)" }}>
-                                Create your own chat room to play your favorite boardgames over the internet with tools like the
-                                DICE
-                                    </h1>
+                            // console.log(props);
+                            return (
+                                <Preview>
+                                    <MediaPreview video={props.localMedia[1]} />
+                                    <MediaPreview video={props.remoteMedia[1]} />
+                                </Preview>
+                            );
                         }}
                     </SWRTC.Room>
                 </SWRTC.Connected>
@@ -42,6 +60,8 @@ if (document.getElementById('app') != null) {
         </Provider>,
         document.getElementById('app')
     );
-} else {
-    console.log('no app found');
 }
+
+export default {
+    run
+};
