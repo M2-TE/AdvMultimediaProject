@@ -28,27 +28,26 @@
 </head>
 
 <body style="background-color: rgb(40,41,43);">
-    <nav class="navbar navbar-light navbar-expand-md navigation-clean" style="background-color: transparent;">
+    <nav class="navbar navbar-light navbar-expand-md navigation-clean" style="background-color: rgb(40,41,43);">
         <div class="container"><a class="navbar-brand" href="#"
                 style="font-family: Pacifico, cursive;color: white;"><strong>DnDConference</strong><br></a><button
                 data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle
                     navigation</span><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navcol-1">
                 <ul class="nav navbar-nav ml-auto">
-                    <li class="nav-item" role="presentation"><a class="nav-link active" href="#">Create</a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link" href="#">About</a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link" href="#">Team</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="#create">Create</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="#about">About</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="#team">Team</a></li>
                 </ul>
             </div>
         </div>
     </nav>
-    <header class="masthead text-white text-center"
-        style="background: url('bg-masthead.jpg')no-repeat center center;background-size: cover;background-image: url(&quot;./../../bootstrap/assets/img/bg-header-dice.jpg&quot;);">
+    <header class="masthead text-white text-center" id="create"
+        style="background: url('bg-masthead.jpg')no-repeat center center;background-size: cover;background-image: url(&quot;bootstrap/assets/img/bg-header-dice.jpg&quot;);">
         <div class="border rounded shadow-sm overlay"></div>
         <div class="container">
             <div class="row">
                 <div class="col-xl-9 mx-auto" id="app">
-
                 </div>
                 <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
                     <form>
@@ -64,7 +63,7 @@
             </div>
         </div>
     </header>
-    <section class="showcase">
+    <section class="showcase" id="about">
         <div class="container-fluid p-0">
             <div class="row no-gutters">
                 <div class="col-lg-6 order-lg-2 text-white showcase-img"
@@ -101,7 +100,7 @@
             </div>
         </div>
     </section>
-    <div class="team-clean" style="background-color: transparent;">
+    <div class="team-clean" style="background-color: transparent;" id="team">
         <div class="container">
             <div class="intro">
                 <h2 class="text-center" style="color: white;">Team </h2>

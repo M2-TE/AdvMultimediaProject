@@ -50,3 +50,10 @@
   letter-spacing: 0.1em;
 }
 
+.navbar.navbar-light.navbar-expand-md.navigation-clean {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 9999;
+}
+
