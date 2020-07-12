@@ -1,28 +1,25 @@
 import { Media, Video } from '@andyet/simplewebrtc';
 import React from 'react';
 import styled from 'styled-components';
-import mq from '../styles/media-queries';
 
-const Container = styled.div({
-    height: '375px',
-    position: 'relative',
+const VideoContainer = styled.div({
     width: '100%',
-    padding: '0 10px',
-    [mq.SMALL_DESKTOP]: {
-        padding: '0',
-        width: '500px'
-    },
+    position: 'relative',
+    padding: '0',
+    margin: '0',
+    display: 'flex',
+    justifyContent: 'center',
+    border: 'solid',
+
     '& video': {
         width: '100%',
-        height: '100%',
         objectFit: 'contain',
-        backgroundColor: '#262a2c'
-    }
+    },
 });
 
 const BlankVideo = styled.div({
     width: '100%',
-    height: '100%',
+    height: '300px',
     backgroundColor: '#262a2c',
     color: '#e9ecec',
     display: 'flex',
@@ -33,23 +30,46 @@ const BlankVideo = styled.div({
     }
 });
 
-const NoVideo = () => (
-    <BlankVideo>
-        <p>No video selected</p>
-    </BlankVideo>
-);
+const FullContainer = styled.div({
+    width: '100%',
+    minHeight: '300px',
+    display: 'flex',
+    marginTop: '100px',
+    justifyContent: 'center',
+});
+
+const SubContainer = styled.div({
+    width: '50%',
+    backgroundColor: '#262a2c',
+});
 
 interface MediaPreviewProps {
     video?: Media;
+    toggleVideo: any;
+    toggleAudio: any;
 }
 
-// MediaPreview displays a camera feed if video is provided, and a VolumeMeter
-// if audio is provided.
-const MediaPreview: React.SFC<MediaPreviewProps> = ({ video }) => (
-    <Container>
-        {/* TODO: Display something that communicates media.noInput media.hasEverHadInput */}
-        {video && video.loaded ? <Video media={video} /> : <NoVideo />}
-    </Container>
+function onclick() {
+    // config.videoSettings.data1 = 'ASDASD';
+}
+
+const MediaPreview: React.SFC<MediaPreviewProps> = ({ video, toggleVideo, toggleAudio }) => (
+    <FullContainer>
+        <SubContainer>
+            <VideoContainer>
+                {
+                    video && video.loaded
+                        ? <Video media={video} />
+                        : <BlankVideo> <p>No video selected</p> </BlankVideo>
+                }
+            </VideoContainer>
+        </SubContainer>
+        <SubContainer>
+            <button onClick={toggleVideo}>
+                CLICK ME
+            </button>
+        </SubContainer>
+    </FullContainer>
 );
 
 export default MediaPreview;
