@@ -1,4 +1,5 @@
 export interface Config {
+    name: string;
     roomName: string;
     roomPassword: string;
     videoActive: boolean;
@@ -6,6 +7,7 @@ export interface Config {
 }
 
 export const config = {
+    name: 'Anonymous',
     roomName: '',
     roomPassword: '',
     videoActive: true,

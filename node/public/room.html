@@ -5,9 +5,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>DnDConferenceWebChat</title>
-    <meta name="description" content="Welcome to DnDConference a webconferencing tool to chat with friends and enemies over the world wide web. We created this, so you can play your favorite boardgames over the internet with additional features like the dice, despite the ongoing pendamic of COVID19.">
+    <meta name="description"
+        content="Welcome to DnDConference a webconferencing tool to chat with friends and enemies over the world wide web. We created this, so you can play your favorite boardgames over the internet with additional features like the dice, despite the ongoing pendamic of COVID19.">
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bitter:400,700">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Pacifico">
     <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
@@ -28,63 +30,98 @@
 <body style="background-color: rgb(40,41,43);height: 100%;">
     <div style="padding: 0px;height: 85%;">
         <div style="height: 2%"></div>
-        <div class="container" style="height: 5%;"><a class="navbar-brand" href="" style="font-family: Pacifico, cursive; text-align: center; background-color: transparent;color: white;"><strong>DnDConference</strong></a></div>
-        <div class="container" style="height: 90%;margin: 0px;padding: 0px;max-width: 100%;"> <!-- use templates instead of hiding-->
-            <div class="row" style="height: 95%;margin: 0px;">
-                <div class="col" style="height: 100%;">
-                    <div style="height: 100%;">
-                        <ul class="nav nav-tabs d-flex d-sm-flex d-md-flex d-lg-flex d-xl-flex justify-content-center justify-content-sm-center justify-content-md-center justify-content-lg-center justify-content-xl-center">
-                            <li class="nav-item"><a class="nav-link active" role="tab" data-toggle="tab" href="#tab-1" style="background-color: rgb(65,66,68);color: white;">Video</a></li>
-                            <li class="nav-item"><a class="nav-link" role="tab" data-toggle="tab" href="#tab-2" style="background-color: rgb(65,66,68);color: white;">Chat</a></li>
-                            <li class="nav-item"><a class="nav-link" role="tab" data-toggle="tab" href="#tab-3" style="background-color: rgb(65,66,68);color: white;">Dice</a></li>
-                        </ul>
-                        <div class="tab-content" style="height: calc(100% - 42px);">
-                            <div class="tab-pane active" role="tabpanel" id="tab-1" style="height: 100%;">
-                                <div class="row" style="height: 100%;">
-                                    <div class="col d-flex d-sm-flex d-md-flex d-lg-flex d-xl-flex justify-content-center justify-content-sm-center align-items-sm-center justify-content-md-center align-items-md-center justify-content-lg-center align-items-lg-center justify-content-xl-center align-items-xl-center">
-                                        <p style="color: white;">There is noone in this chatroom...</p>
+        <div class="container" style="height: 5%;"><a class="navbar-brand" href=""
+                style="font-family: Pacifico, cursive; text-align: center; background-color: transparent;color: white;"><strong>DnDConference</strong></a>
+        </div>
+
+        <div id="app" class="container">
+
+            <div class="container" style="height: 90%;margin: 0px;padding: 0px;max-width: 100%;" hidden>
+                <!-- use templates instead of hiding-->
+                <div class="row" style="height: 95%;margin: 0px;">
+                    <div class="col" style="height: 100%;">
+                        <div style="height: 100%;">
+                            <ul
+                                class="nav nav-tabs d-flex d-sm-flex d-md-flex d-lg-flex d-xl-flex justify-content-center justify-content-sm-center justify-content-md-center justify-content-lg-center justify-content-xl-center">
+                                <li class="nav-item"><a class="nav-link active" role="tab" data-toggle="tab"
+                                        href="#tab-1" style="background-color: rgb(65,66,68);color: white;">Video</a>
+                                </li>
+                                <li class="nav-item"><a class="nav-link" role="tab" data-toggle="tab" href="#tab-2"
+                                        style="background-color: rgb(65,66,68);color: white;">Chat</a></li>
+                                <li class="nav-item"><a class="nav-link" role="tab" data-toggle="tab" href="#tab-3"
+                                        style="background-color: rgb(65,66,68);color: white;">Dice</a></li>
+                            </ul>
+                            <div class="tab-content" style="height: calc(100% - 42px);">
+                                <div class="tab-pane active" role="tabpanel" id="tab-1" style="height: 100%;">
+                                    <div class="row" style="height: 100%;">
+                                        <div
+                                            class="col d-flex d-sm-flex d-md-flex d-lg-flex d-xl-flex justify-content-center justify-content-sm-center align-items-sm-center justify-content-md-center align-items-md-center justify-content-lg-center align-items-lg-center justify-content-xl-center align-items-xl-center">
+                                            <p style="color: white;">There is noone in this chatroom...</p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="tab-pane" role="tabpanel" id="tab-2" style="height: 100%;">
-                                <div style="height: 5%;"></div>
-                                <div class="bg-dark border rounded" style="overflow-y: scroll;height: 85%;">
-                                    <ul class="list-group">
-                                        <li class="list-group-item" style="background-color: rgb(65,66,68);margin: 2px;margin-top: 2px;margin-bottom: 2px;margin-right: 4px;margin-left: 4px;"><span class="border rounded" style="color: rgb(36,255,0);padding: 5px;">Sender</span><span style="color: rgb(111,212,255);padding: 0px;padding-right: 20px;padding-left: 10px;">19:23</span><span style="color: white;">This is the Message that was send...</span></li>
-                                    </ul>
+                                <div class="tab-pane" role="tabpanel" id="tab-2" style="height: 100%;">
+                                    <div style="height: 5%;"></div>
+                                    <div class="bg-dark border rounded" style="overflow-y: scroll;height: 85%;">
+                                        <ul class="list-group">
+                                            <li class="list-group-item"
+                                                style="background-color: rgb(65,66,68);margin: 2px;margin-top: 2px;margin-bottom: 2px;margin-right: 4px;margin-left: 4px;">
+                                                <span class="border rounded"
+                                                    style="color: rgb(36,255,0);padding: 5px;">Sender</span><span
+                                                    style="color: rgb(111,212,255);padding: 0px;padding-right: 20px;padding-left: 10px;">19:23</span><span
+                                                    style="color: white;">This is the Message that was send...</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="d-flex d-sm-flex d-md-flex d-lg-flex d-xl-flex justify-content-center align-items-center justify-content-sm-center align-items-sm-center justify-content-md-center align-items-md-center justify-content-lg-center align-items-lg-center justify-content-xl-center align-items-xl-center"
+                                        style="height: 10%;"><input type="text" style="width: 98%;padding: 0px;"
+                                            placeholder="chat message..." required=""></div>
                                 </div>
-                                <div class="d-flex d-sm-flex d-md-flex d-lg-flex d-xl-flex justify-content-center align-items-center justify-content-sm-center align-items-sm-center justify-content-md-center align-items-md-center justify-content-lg-center align-items-lg-center justify-content-xl-center align-items-xl-center"
-                                    style="height: 10%;"><input type="text" style="width: 98%;padding: 0px;" placeholder="chat message..." required=""></div>
-                            </div>
-                            <div class="tab-pane" role="tabpanel" id="tab-3" style="height: 100%;width: auto;">
-                                <div class="row" style="height: 100%;">
-                                    <div class="col d-flex d-sm-flex d-md-flex d-lg-flex d-xl-flex justify-content-center align-items-center justify-content-sm-center align-items-sm-center justify-content-md-center align-items-md-center justify-content-lg-center align-items-lg-center justify-content-xl-center align-items-xl-center">
-                                        <p style="color: rgb(255,255,255);">The DICE tool can be implemented right here.</p>
+                                <div class="tab-pane" role="tabpanel" id="tab-3" style="height: 100%;width: auto;">
+                                    <div class="row" style="height: 100%;">
+                                        <div
+                                            class="col d-flex d-sm-flex d-md-flex d-lg-flex d-xl-flex justify-content-center align-items-center justify-content-sm-center align-items-sm-center justify-content-md-center align-items-md-center justify-content-lg-center align-items-lg-center justify-content-xl-center align-items-xl-center">
+                                            <p style="color: rgb(255,255,255);">The DICE tool can be implemented right
+                                                here.
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div
+                        class="col d-flex d-sm-flex d-md-flex d-lg-flex d-xl-flex justify-content-center align-items-center justify-content-sm-center align-items-sm-center justify-content-md-center align-items-md-center justify-content-lg-center align-items-lg-center justify-content-xl-center align-items-xl-center">
+                        <button class="btn btn-dark" type="button"
+                            style="background-color: rgb(65,66,68);">MUTE</button><button class="btn btn-dark"
+                            type="button" style="background-color: rgb(65,66,68);">SPEAKER</button><button
+                            class="btn btn-dark" type="button"
+                            style="background-color: rgb(65,66,68);">CAM</button><button class="btn btn-dark"
+                            type="button" style="background-color: rgb(65,66,68);">SHARE SCREEN</button><button
+                            class="btn btn-dark" type="button" style="background-color: rgb(65,66,68);">Leave</button>
+                    </div>
+                </div>
             </div>
-            <div class="row">
-                <div class="col d-flex d-sm-flex d-md-flex d-lg-flex d-xl-flex justify-content-center align-items-center justify-content-sm-center align-items-sm-center justify-content-md-center align-items-md-center justify-content-lg-center align-items-lg-center justify-content-xl-center align-items-xl-center"><button class="btn btn-dark" type="button" style="background-color: rgb(65,66,68);">MUTE</button><button class="btn btn-dark" type="button" style="background-color: rgb(65,66,68);">SPEAKER</button><button class="btn btn-dark" type="button"
-                        style="background-color: rgb(65,66,68);">CAM</button><button class="btn btn-dark" type="button" style="background-color: rgb(65,66,68);">SHARE SCREEN</button><button class="btn btn-dark" type="button" style="background-color: rgb(65,66,68);">Leave</button></div>
-            </div>
-        </div>
-        <div class="container" style="height: 90%;margin: 0px;padding: 0px;max-width: 100%;" hidden>
-            <div class="container hero" style="height: 100%;">
-                <div class="header-dark" style="background-image: url(&quot;assets/img/bg-header-stars.jpg&quot;);height: 100%;padding-top: 30px;">
-                    <div class="row" style="height: 20%">
-                        <div class="col-md-8 offset-md-2">
-                            <h1 class="text-center" style="color: white;">Ready To Join?</h1>
+            <div class="container" style="height: 90%;margin: 0px;padding: 0px;max-width: 100%;" hidden>
+                <div class="container hero" style="height: 100%;">
+                    <div class="header-dark"
+                        style="background-image: url(&quot;assets/img/bg-header-stars.jpg&quot;);height: 100%;padding-top: 30px;">
+                        <div class="row" style="height: 20%">
+                            <div class="col-md-8 offset-md-2">
+                                <h1 class="text-center" style="color: white;">Ready To Join?</h1>
+                            </div>
                         </div>
-                    </div>
-                    <div class="row" style="height: 80%;margin-right: 30px;margin-left: 30px;">
-                        <div id="app"></div>
-                    </div>
-                    <div class="row">
-                        <div class="col d-flex d-sm-flex d-md-flex d-lg-flex d-xl-flex justify-content-center align-self-start justify-content-sm-center justify-content-md-center justify-content-lg-center justify-content-xl-center"><button class="btn btn-dark btn-lg" type="submit" style="background-color: rgb(40,41,43);filter: hue-rotate(0deg);">Join Room</button></div>
+                        <div class="row" style="height: 80%;margin-right: 30px;margin-left: 30px;">
+                        </div>
+                        <div class="row">
+                            <div
+                                class="col d-flex d-sm-flex d-md-flex d-lg-flex d-xl-flex justify-content-center align-self-start justify-content-sm-center justify-content-md-center justify-content-lg-center justify-content-xl-center">
+                                <button class="btn btn-dark btn-lg" type="submit"
+                                    style="background-color: rgb(40,41,43);filter: hue-rotate(0deg);">Join Room</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -94,18 +131,34 @@
         <footer>
             <div class="container">
                 <div class="row">
-                    <div class="col item social"><a href="https://www.hs-fulda.de/"><i class="icon ion-university"></i></a><a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"><i class="far fa-grin-squint-tears"></i></a><a href="https://github.com/Model2TypeE/AdvMultimediaProject"><i class="icon ion-social-github"></i></a>
-                        <a
-                            href="#"><i class="fab fa-discord"></i></a>
+                    <div class="col item social"><a href="https://www.hs-fulda.de/"><i
+                                class="icon ion-university"></i></a><a
+                            href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"><i
+                                class="far fa-grin-squint-tears"></i></a><a
+                            href="https://github.com/Model2TypeE/AdvMultimediaProject"><i
+                                class="icon ion-social-github"></i></a>
+                        <a href="#"><i class="fab fa-discord"></i></a>
                     </div>
                 </div>
                 <p class="copyright">DnDConference © 2020. All Rights Reserved.<br></p>
             </div>
         </footer>
     </div>
+
+
+    <!-- Including bootstrap js -->
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="assets/js/Sidebar-Menu.js"></script>
+
+    <!-- Including bundled typescript for SimpleWebRTC -->
+    <script type="text/javascript" src="bundle.min.js"></script>
+
+    <!-- Interacting with SimpleWebRTC -->
+    <script type="text/javascript">
+        const roomName = 'derp';
+        SimpleWebRTC.run({ roomName });
+    </script>
 </body>
 
 </html>
