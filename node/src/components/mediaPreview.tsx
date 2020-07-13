@@ -78,6 +78,7 @@ const EnabledDescriptor = styled.div({
 });
 
 interface Props {
+    enterRoom: any;
     video?: Media;
     audio?: Media;
 }
@@ -114,7 +115,10 @@ class MediaPreview extends React.Component<Props, State> {
 
     // enter room with given input data
     handleClick() {
-        console.log(this.state.usernameInput);
+        this.props.enterRoom(
+            this.state.audioEnabled,
+            this.state.videoEnabled,
+            this.state.usernameInput);
     }
 
     toggleAudio() {

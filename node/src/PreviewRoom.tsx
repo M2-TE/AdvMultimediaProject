@@ -4,7 +4,7 @@ import MediaPreview from './components/MediaPreview';
 import { UserMediaIds } from '@andyet/simplewebrtc/components/RequestUserMedia';
 
 interface Props {
-    store: any;
+    enterRoom: any;
 };
 interface State {
     permissions: boolean;
@@ -45,7 +45,7 @@ export default class PreviewRoom extends React.Component<Props, State> {
                     render={({ media }) => {
                         const previewVideo = media.filter(m => m.kind === "video")[0]
                         const previewAudio = media.filter(m => m.kind === "audio")[0]
-                        return <MediaPreview video={previewVideo} audio={previewAudio} />
+                        return <MediaPreview enterRoom={this.props.enterRoom} video={previewVideo} audio={previewAudio} />
                     }}
                 />
             </div>

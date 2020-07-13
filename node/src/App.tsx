@@ -26,6 +26,8 @@ export default class App extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
 
+        this.enterRoom = this.enterRoom.bind(this);
+
         this.state = {
             roomEntered: false,
             username: 'Anonymous',
@@ -38,7 +40,12 @@ export default class App extends React.Component<Props, State> {
 
     enterRoom(audioActive: boolean, videoActive: boolean, username: string) {
         this.setState((state) => ({
-
+            roomEntered: true,
+            username: username == "" ? state.username : username,
+            roomName: state.roomName,
+            roomPassword: state.roomPassword,
+            videoActive: videoActive,
+            audioActive: audioActive
         }));
     }
 
@@ -56,7 +63,7 @@ export default class App extends React.Component<Props, State> {
                             videoActive={this.state.videoActive}>
 
                         </Room>)
-                        : (<PreviewRoom store={store}>
+                        : (<PreviewRoom enterRoom={this.enterRoom}>
 
                         </PreviewRoom>)
                 }
