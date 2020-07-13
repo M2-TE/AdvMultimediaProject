@@ -1,7 +1,8 @@
-import { Media, Video, Audio } from '@andyet/simplewebrtc';
+import { Media, Video, VolumeMeter } from '@andyet/simplewebrtc';
 import React from 'react';
 import styled from 'styled-components';
-import { ProgressPlugin } from 'webpack';
+import { default as Meter } from './VolumeMeter';
+import ToggleButton from 'react-toggle-button';
 
 const VideoContainer = styled.div({
     width: '100%',
@@ -43,18 +44,47 @@ const FullContainer = styled.div({
 });
 
 const SubContainer = styled.div({
+    padding: '5px',
     width: '50%',
     backgroundColor: '#262a2c',
+});
+
+const Volume = styled.div({
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignContent: 'middle',
+    marginTop: '5px'
+});
+
+const EnableDisableParent = styled.div({
+    marginTop: '5px',
+    marginBottom: '5px',
+    padding: '5px',
+    color: '#e9ecec',
+    backgroundColor: '#222222',
+    display: 'flex',
+    justifyContent: 'space-between'
+});
+
+const EnableDisable = styled.div({
+    margin: '5px',
+    display: 'flex',
+    justifyContent: 'start'
+});
+
+const EnabledDescriptor = styled.div({
+    marginRight: '5px'
 });
 
 interface Props {
     video?: Media;
     audio?: Media;
-    toggleVideo: any;
-    toggleAudio: any;
 }
 interface State {
     usernameInput: string;
+    videoEnabled: boolean;
+    audioEnabled: boolean;
 }
 class MediaPreview extends React.Component<Props, State> {
     constructor(props: Props) {
@@ -63,15 +93,22 @@ class MediaPreview extends React.Component<Props, State> {
         this.handleUsernameInput = this.handleUsernameInput.bind(this);
         this.handleClick = this.handleClick.bind(this);
 
+        this.toggleAudio = this.toggleAudio.bind(this);
+        this.toggleVideo = this.toggleVideo.bind(this);
+
         this.state = {
-            usernameInput: ''
+            usernameInput: '',
+            videoEnabled: true,
+            audioEnabled: true
         };
     }
 
     handleUsernameInput(event: React.ChangeEvent<HTMLInputElement>) {
         event.persist();
         this.setState((state) => ({
-            usernameInput: event.target.value
+            usernameInput: event.target.value,
+            videoEnabled: state.videoEnabled,
+            audioEnabled: state.audioEnabled
         }));
     }
 
@@ -80,56 +117,88 @@ class MediaPreview extends React.Component<Props, State> {
         console.log(this.state.usernameInput);
     }
 
+    toggleAudio() {
+        this.setState((state) => ({
+            usernameInput: state.usernameInput,
+            videoEnabled: state.videoEnabled,
+            audioEnabled: !state.audioEnabled
+        }));
+    }
+    toggleVideo() {
+        this.setState((state) => ({
+            usernameInput: state.usernameInput,
+            videoEnabled: !state.videoEnabled,
+            audioEnabled: state.audioEnabled
+        }));
+    }
+
     render() {
         return (
             <FullContainer>
                 <SubContainer>
                     <VideoContainer>
                         {
-                            this.props.video && this.props.video.loaded
+                            this.props.video && this.props.video.loaded && this.state.videoEnabled
                                 ? <Video media={this.props.video} />
                                 : <BlankVideo> <p>No video selected</p> </BlankVideo>
                         }
                     </VideoContainer>
+
+                    <div>
+                        {
+                            this.props.audio && this.state.audioEnabled
+                                ? <VolumeMeter
+                                    media={this.props.audio}
+                                    noInputTimeout={7000}
+                                    render={({ noInput, volume, speaking }) => (
+                                        <Volume>
+                                            <Meter
+                                                buckets={16}
+                                                volume={-volume}
+                                                speaking={true}
+                                                loaded={true}
+                                                noInput={noInput}
+                                                requesting={false}
+                                            />
+                                        </Volume>
+                                    )}
+                                />
+                                : <div></div>
+                        }
+                    </div>
                 </SubContainer>
                 <SubContainer>
                     <div>
-                        <button onClick={this.props.toggleVideo}> Toggle Video </button>
-                        <button onClick={this.props.toggleAudio}> ToggleAudio </button>
-                        <input type="text" placeholder={"Username"} autoFocus={true} onChange={this.handleUsernameInput} />
-                        <input
-                            type="button"
-                            value="Enter Room"
-                            onClick={this.handleClick}
-                        />
+                        <EnableDisableParent>
+                            <EnableDisable>
+                                <EnabledDescriptor><span>Audio Enabled:</span></EnabledDescriptor>
+                                <ToggleButton
+                                    value={this.state.audioEnabled || false}
+                                    onToggle={this.toggleAudio} />
+                            </EnableDisable>
+                            <EnableDisable>
+                                <EnabledDescriptor><span>Video Enabled:</span></EnabledDescriptor>
+                                <ToggleButton
+                                    value={this.state.videoEnabled || false}
+                                    onToggle={this.toggleVideo} />
+                            </EnableDisable>
+                        </EnableDisableParent>
+                        <div>
+                            <input type="text"
+                                className={"border-dark form-control"}
+                                required={true} placeholder={"Username"}
+                                autoFocus={true} onChange={this.handleUsernameInput} />
+                            <input
+                                className={"btn btn-dark btn-block btn-lg"}
+                                type="button"
+                                value="Enter Room"
+                                onClick={this.handleClick}
+                            />
+                        </div>
                     </div>
                 </SubContainer>
-            </FullContainer>
+            </FullContainer >
         );
     }
 }
-// const MediaPreview: React.SFC<MediaPreviewProps> = ({ video, toggleVideo, toggleAudio }) => (
-//     <FullContainer>
-//         <SubContainer>
-//             <VideoContainer>
-//                 {
-//                     video && video.loaded
-//                         ? <Video media={video} />
-//                         : <BlankVideo> <p>No video selected</p> </BlankVideo>
-//                 }
-//             </VideoContainer>
-//         </SubContainer>
-//         <SubContainer>
-//             <button onClick={toggleVideo}> Toggle Video </button>
-//             <button onClick={toggleAudio}> ToggleAudio </button>
-//             <input type="text" onChange={this.handleChange} />
-//             <input
-//                 type="button"
-//                 value="Alert the text input"
-//                 onClick={this.handleClick}
-//             />
-//         </SubContainer>
-//     </FullContainer>
-// );
-
 export default MediaPreview;

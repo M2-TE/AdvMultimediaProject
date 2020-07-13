@@ -8,8 +8,6 @@ interface Props {
 };
 interface State {
     permissions: boolean;
-    videoEnabled: boolean;
-    audioEnabled: boolean;
 };
 export default class PreviewRoom extends React.Component<Props, State> {
     constructor(props: Props) {
@@ -17,37 +15,16 @@ export default class PreviewRoom extends React.Component<Props, State> {
 
         this.permissionsGranted = this.permissionsGranted.bind(this);
         this.permissionsDenied = this.permissionsDenied.bind(this);
-        this.toggleAudio = this.toggleAudio.bind(this);
-        this.toggleVideo = this.toggleVideo.bind(this);
 
         this.state = {
             permissions: false,
-            videoEnabled: true,
-            audioEnabled: true
         };
     }
 
     permissionsGranted(trackIds?: UserMediaIds) {
+        console.log('perm toggled');
         this.setState((state) => ({
-            permissions: true,
-            videoEnabled: state.videoEnabled,
-            audioEnabled: state.audioEnabled
-        }));
-    }
-
-    toggleAudio() {
-        this.setState((state) => ({
-            permissions: state.permissions,
-            videoEnabled: state.videoEnabled,
-            audioEnabled: !state.audioEnabled
-        }));
-    }
-
-    toggleVideo() {
-        this.setState((state) => ({
-            permissions: state.permissions,
-            videoEnabled: !state.videoEnabled,
-            audioEnabled: state.audioEnabled
+            permissions: true
         }));
     }
 
@@ -58,18 +35,17 @@ export default class PreviewRoom extends React.Component<Props, State> {
         return (
             <div>
                 {/* Get permissions to use the user's media devices */}
-                permissions ? : (
                 <SWRTC.RequestUserMedia audio video auto
                     onSuccess={this.permissionsGranted}
-                    onError={this.permissionsDenied} />)
+                    onError={this.permissionsDenied} />
 
                 {/* Preview the Media that was returned during the media request */}
                 <SWRTC.LocalMediaList
                     screen={false}
                     render={({ media }) => {
-                        const previewVideo = this.state.videoEnabled ? media.filter(m => m.kind === "video")[0] : undefined;
-                        const previewAudio = this.state.audioEnabled ? media.filter(m => m.kind === "audio")[0] : undefined;
-                        return <MediaPreview video={previewVideo} toggleVideo={this.toggleVideo} toggleAudio={this.toggleAudio} />
+                        const previewVideo = media.filter(m => m.kind === "video")[0]
+                        const previewAudio = media.filter(m => m.kind === "audio")[0]
+                        return <MediaPreview video={previewVideo} audio={previewAudio} />
                     }}
                 />
             </div>

@@ -26,26 +26,12 @@ export default class App extends React.Component<Props, Config> {
         config.name = this.props.name == null ? 'Anonymous' : this.props.name;
         config.roomPassword = this.props.password == null ? '' : this.props.password;
         this.state = config;
-        this.toggleVideoActive = this.toggleVideoActive.bind(this);
-        this.toggleAudioActive = this.toggleAudioActive.bind(this);
     }
 
-    toggleVideoActive() {
-        console.log('video toggled');
-        this.setState({
-            roomName: this.state.roomName,
-            roomPassword: this.state.roomPassword,
-            videoActive: !this.state.videoActive,
-            audioActive: this.state.audioActive
-        });
-    }
-    toggleAudioActive() {
-        this.setState({
-            roomName: this.state.roomName,
-            roomPassword: this.state.roomPassword,
-            videoActive: this.state.videoActive,
-            audioActive: !this.state.audioActive
-        });
+    enterRoom(audioActive: boolean, videoActive: boolean, username: string) {
+        this.setState((state) => ({
+
+        }));
     }
 
     render() {
