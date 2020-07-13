@@ -4,14 +4,14 @@ import * as SWRTC from '@andyet/simplewebrtc';
 const configUrl = 'https://api.simplewebrtc.com/config/guest/413edda4665ecafd9710bee2';
 
 interface Props {
-    name: string;
+    username: string;
     roomName: string;
     roomPassword: string;
     audioActive: boolean;
     videoActive: boolean;
 };
 interface State {
-    name: string;
+    username: string;
     roomName: string;
     roomPassword: string;
     videoActive: boolean;
@@ -23,7 +23,7 @@ export default class Room extends React.Component<Props, State> {
 
         // deep copy room details into the state object
         this.state = {
-            name: this.props.name,
+            username: this.props.username,
             roomName: this.props.roomName,
             roomPassword: this.props.roomPassword,
             videoActive: this.props.videoActive,

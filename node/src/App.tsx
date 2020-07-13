@@ -2,30 +2,38 @@ import { Provider } from 'react-redux';
 import React from 'react';
 import * as SWRTC from '@andyet/simplewebrtc';
 
-import { Config, config } from './Config';
 import PreviewRoom from './PreviewRoom';
-import MediaPreview from './components/MediaPreview';
 import Room from './Room';
 
 // create store on init
 const store = SWRTC.createStore();
-
-const roomEntered = false;
 
 interface Props {
     roomName: string;
     password?: string;
     name?: string;
 };
-export default class App extends React.Component<Props, Config> {
+interface State {
+    roomEntered: boolean;
+    username: string;
+    roomName: string;
+    roomPassword: string;
+    videoActive: boolean;
+    audioActive: boolean;
+}
+export default class App extends React.Component<Props, State> {
     // constructor to initialize app
     constructor(props: Props) {
         super(props);
 
-        config.roomName = this.props.roomName;
-        config.name = this.props.name == null ? 'Anonymous' : this.props.name;
-        config.roomPassword = this.props.password == null ? '' : this.props.password;
-        this.state = config;
+        this.state = {
+            roomEntered: false,
+            username: 'Anonymous',
+            roomName: this.props.roomName,
+            roomPassword: '',
+            videoActive: true,
+            audioActive: true
+        };
     }
 
     enterRoom(audioActive: boolean, videoActive: boolean, username: string) {
@@ -40,10 +48,10 @@ export default class App extends React.Component<Props, Config> {
             <Provider store={store}>
                 {
                     // send user either to the preview room or the actual webrtc room
-                    roomEntered
-                        ? (<Room roomName={config.roomName}
-                            roomPassword={config.roomPassword}
-                            name={'peep'}
+                    this.state.roomEntered
+                        ? (<Room roomName={this.state.roomName}
+                            roomPassword={this.state.roomPassword}
+                            username={this.state.username}
                             audioActive={this.state.audioActive}
                             videoActive={this.state.videoActive}>
 
