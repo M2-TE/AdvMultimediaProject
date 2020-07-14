@@ -1,6 +1,6 @@
 import React from 'react';
 import * as SWRTC from '@andyet/simplewebrtc';
-import MediaPreview from './components/MediaPreview';
+import MediaPreview from './MediaPreview';
 import { UserMediaIds } from '@andyet/simplewebrtc/components/RequestUserMedia';
 
 interface Props {

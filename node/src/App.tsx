@@ -2,8 +2,8 @@ import { Provider } from 'react-redux';
 import React from 'react';
 import * as SWRTC from '@andyet/simplewebrtc';
 
-import PreviewRoom from './PreviewRoom';
-import Room from './Room';
+import PreviewRoom from './components/Preview/PreviewRoom';
+import Room from './components/Room';
 
 // create store on init
 const store = SWRTC.createStore();
@@ -29,7 +29,7 @@ export default class App extends React.Component<Props, State> {
         this.enterRoom = this.enterRoom.bind(this);
 
         this.state = {
-            roomEntered: false,
+            roomEntered: true,
             username: 'Anonymous',
             roomName: this.props.roomName,
             roomPassword: '',
@@ -61,7 +61,6 @@ export default class App extends React.Component<Props, State> {
                             username={this.state.username}
                             audioActive={this.state.audioActive}
                             videoActive={this.state.videoActive}>
-
                         </Room>)
                         : (<PreviewRoom enterRoom={this.enterRoom}>
 

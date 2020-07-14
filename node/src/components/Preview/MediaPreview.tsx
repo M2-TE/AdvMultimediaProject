@@ -138,7 +138,7 @@ class MediaPreview extends React.Component<Props, State> {
 
     render() {
         return (
-            <FullContainer>
+            <FullContainer className={"container"}>
                 <SubContainer>
                     <VideoContainer>
                         {
