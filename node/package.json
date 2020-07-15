@@ -19,6 +19,7 @@
 		"awesome-typescript-loader": "^5.2.1",
 		"copy-webpack-plugin": "5.1.1",
 		"html-webpack-plugin": "^4.3.0",
+		"jsonwebtoken": "^8.5.1",
 		"pm2": "^4.4.0",
 		"react": "^16.13.1",
 		"react-dom": "^16.13.1",
