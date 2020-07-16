@@ -3,7 +3,7 @@ import { Video, Notifications } from '@andyet/simplewebrtc';
 import * as SWRTC from '@andyet/simplewebrtc';
 import * as RS from './RoomStyling';
 import jwt from 'jsonwebtoken';
-import { removeAllMedia } from '@andyet/simplewebrtc/actions';
+import ToggleButton from 'react-toggle-button';
 
 let userDataToken = undefined;
 interface Props {
@@ -27,6 +27,9 @@ export default class Room extends React.Component<Props, State> {
         super(props);
 
         this.updateContainers = this.updateContainers.bind(this);
+        this.toggleAudioMute = this.toggleAudioMute.bind(this);
+        this.toggleVideoMute = this.toggleVideoMute.bind(this);
+        this.setPinnedPeer = this.setPinnedPeer.bind(this);
 
         userDataToken = jwt.sign(
             {
@@ -47,6 +50,39 @@ export default class Room extends React.Component<Props, State> {
 
     updateContainers() {
 
+    };
+
+    setPinnedPeer(peer: SWRTC.Peer) {
+        this.state = {
+            username: this.state.username,
+            roomName: this.state.roomName,
+            roomPassword: this.state.roomPassword,
+            videoActive: this.state.videoActive,
+            audioActive: this.state.audioActive,
+            pinnedPeer: peer
+        };
+    }
+
+    toggleAudioMute() {
+        this.setState((state) => ({
+            username: state.username,
+            roomName: state.roomName,
+            roomPassword: state.roomPassword,
+            videoActive: state.videoActive,
+            audioActive: !state.audioActive,
+            pinnedPeer: state.pinnedPeer
+        }));
+    };
+
+    toggleVideoMute() {
+        this.setState((state) => ({
+            username: state.username,
+            roomName: state.roomName,
+            roomPassword: state.roomPassword,
+            videoActive: !state.videoActive,
+            audioActive: state.audioActive,
+            pinnedPeer: state.pinnedPeer
+        }));
     };
 
     render() {
@@ -82,10 +118,12 @@ export default class Room extends React.Component<Props, State> {
                         {/* Connect to a room with a name and optional password */}
                         <SWRTC.Room name={this.state.roomName} password={this.state.roomPassword}>
                             {props => {
-
+                                const roomAddress: string =
+                                    props.room.address != undefined
+                                        ? props.room.address
+                                        : '';
                                 const localVideo = props.localMedia.filter(m => m.kind === "video")[0];
                                 const remoteVideos = props.remoteMedia.filter(m => m.kind === "video");
-
 
                                 // create main video content
                                 let mainVideo;
@@ -102,7 +140,7 @@ export default class Room extends React.Component<Props, State> {
                                         }
                                     } else {
                                         // set remote user as pinned
-                                        const mainPeerVideo = props.remoteMedia.filter(m => m.id.split['/'][1] === this.state.pinnedPeer?.id && m.kind === "video")[0];
+                                        const mainPeerVideo = props.remoteMedia.filter(m => m.owner?.split('/')[1] === this.state.pinnedPeer?.id && m.kind === "video")[0];
                                         if (mainPeerVideo != undefined) {
                                             mainVideo = <Video media={mainPeerVideo} qualityProfile={'high'} />;
                                         } else {
@@ -129,13 +167,16 @@ export default class Room extends React.Component<Props, State> {
                                     // add all other non-pinned peers
                                     remoteVideos.forEach(element => {
                                         if (this.state.pinnedPeer == undefined
-                                            || this.state.pinnedPeer != undefined && element.id != this.state.pinnedPeer.id) {
-                                            const customerData: any = props.peers.filter(peer => peer.id === element.owner?.split("/")[1])[0].customerData;
+                                            || (this.state.pinnedPeer != undefined && element.owner?.split('/')[1] != this.state.pinnedPeer.id)) {
+                                            const peerID = element.owner?.split("/")[1];
+                                            const peer = props.peers.filter(peer => peer.id === peerID)[0];
+                                            const customerData: any = peer.customerData;
                                             const username = customerData.username;
                                             sideVideos.push(
                                                 {
                                                     username: username,
-                                                    media: element
+                                                    media: element,
+                                                    peer: peer
                                                 });
                                         }
                                     });
@@ -143,16 +184,114 @@ export default class Room extends React.Component<Props, State> {
 
                                 // render site content
                                 return (
-                                    <SWRTC.UserControls render={({ mute, unmute, isMuted }) => {
-                                        if (this.state.audioActive == false && !isMuted) {
+                                    <SWRTC.UserControls render={({ mute, unmute, isMuted, pauseVideo, resumeVideo, isPaused }) => {
+                                        if (!this.state.audioActive && !isMuted) {
                                             mute();
+                                        } else if (this.state.audioActive && isMuted) {
+                                            unmute();
                                         }
+
+                                        if (!this.state.videoActive && !isPaused) {
+                                            pauseVideo();
+                                        } else if (this.state.videoActive && isPaused) {
+                                            resumeVideo();
+                                        }
+
                                         return (
-                                            <div><RS.UserContainer>
-                                                <div>User Info</div>
-                                            </RS.UserContainer>
+                                            <div>
+                                                <RS.UserContainer>
+                                                    <p>User: {this.state.username}</p>
+                                                    <div>
+                                                        <p>Toggle Video </p>
+                                                        <ToggleButton
+                                                            value={this.state.videoActive}
+                                                            onToggle={this.toggleVideoMute} />
+                                                    </div>
+                                                    <br />
+                                                    <div>
+                                                        <p>Toggle Audio</p>
+                                                        <ToggleButton
+                                                            value={this.state.audioActive}
+                                                            onToggle={this.toggleAudioMute} />
+                                                    </div>
+                                                </RS.UserContainer>
                                                 <RS.ChatContainer>
                                                     <div>Chat</div>
+                                                    {
+                                                        props.room.address != undefined
+                                                            ? (
+                                                                <div>
+                                                                    <RS.ChatMessagesContainer>
+                                                                        <RS.StyledStayDownContainer>
+                                                                            <SWRTC.ChatList
+                                                                                room={props.room.address}
+                                                                                renderGroup={({ chats, peer }) => {
+                                                                                    let peerUsername: string;
+                                                                                    if (peer != undefined) {
+                                                                                        const custData: any = peer?.customerData;
+                                                                                        peerUsername = custData.username;
+                                                                                    } else {
+                                                                                        peerUsername = 'Anonymous';
+                                                                                    }
+                                                                                    return (
+                                                                                        <RS.ChatMessageGroup key={chats[0].id} chats={chats}
+                                                                                            peerName={peerUsername} />
+                                                                                    );
+                                                                                }}
+                                                                            />
+                                                                        </RS.StyledStayDownContainer>
+                                                                    </RS.ChatMessagesContainer>
+                                                                    <RS.ChatInputTextContainer>
+                                                                        <SWRTC.ChatInput
+                                                                            room={roomAddress}
+                                                                            autoFocus
+                                                                            sendOnEnter
+                                                                            render={chatProps => (
+                                                                                <div>
+                                                                                    <SWRTC.ChatInputTextArea {...chatProps} />
+                                                                                    <RS.DiceContainer>
+                                                                                        <button onClick={() => {
+                                                                                            const num = Math.floor((Math.random() * 4) + 1);
+                                                                                            chatProps.updateMessage(`${num}`);
+                                                                                            chatProps.sendMessage();
+                                                                                        }}>D4</button>
+                                                                                        <button onClick={() => {
+                                                                                            const num = Math.floor((Math.random() * 6) + 1);
+                                                                                            chatProps.updateMessage(`${num}`);
+                                                                                            chatProps.sendMessage();
+                                                                                        }}>D6</button>
+                                                                                        <button onClick={() => {
+                                                                                            const num = Math.floor((Math.random() * 8) + 1);
+                                                                                            chatProps.updateMessage(`${num}`);
+                                                                                            chatProps.sendMessage();
+                                                                                        }}>D8</button>
+                                                                                        <button onClick={() => {
+                                                                                            const num = Math.floor((Math.random() * 10) + 1);
+                                                                                            chatProps.updateMessage(`${num}`);
+                                                                                            chatProps.sendMessage();
+                                                                                        }}>D10</button>
+                                                                                        <button onClick={() => {
+                                                                                            const num = Math.floor((Math.random() * 12) + 1);
+                                                                                            chatProps.updateMessage(`${num}`);
+                                                                                            chatProps.sendMessage();
+                                                                                        }}>D12</button>
+                                                                                        <button onClick={() => {
+                                                                                            const num = Math.floor((Math.random() * 20) + 1);
+                                                                                            chatProps.updateMessage(`${num}`);
+                                                                                            chatProps.sendMessage();
+                                                                                        }}>D20</button>
+                                                                                    </RS.DiceContainer>
+                                                                                </div>)}
+                                                                            onChat={(opt) => {
+                                                                                opt.body = 'gay';
+                                                                                opt.displayName = this.state.username;
+                                                                            }} />
+                                                                    </RS.ChatInputTextContainer>
+                                                                </div>
+                                                            )
+                                                            : <div></div>
+                                                    }
+
                                                 </RS.ChatContainer>
                                                 <RS.MainContainer>
                                                     {/* Center Video/User */}
@@ -163,20 +302,11 @@ export default class Room extends React.Component<Props, State> {
                                                     {/* Videos/Users that are not in focus */}
                                                     {<RS.SideVideosContainer>
                                                         {
-                                                            sideVideos.map(function (peerDetails) {
+                                                            sideVideos.map((peerDetails) => {
                                                                 return (
-                                                                    <RS.SidePeerContainer onClick={() => { console.log('peer clicked') }}>
-                                                                        <RS.SideVideoExtraContent>
-                                                                            <p>{peerDetails.username}</p>
-                                                                        </RS.SideVideoExtraContent>
-                                                                        <RS.SideVideoContainer>
-                                                                            {
-                                                                                peerDetails.media == undefined
-                                                                                    ? <div></div>
-                                                                                    : <Video media={peerDetails.media} qualityProfile={'low'} />
-                                                                            }
-                                                                        </RS.SideVideoContainer>
-                                                                    </RS.SidePeerContainer>
+                                                                    <RS.SideVideo username={peerDetails.username}
+                                                                        video={peerDetails.media}
+                                                                        onclick={() => { this.setPinnedPeer(peerDetails.peer); }} />
                                                                 )
                                                             })
                                                         }
