@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html style="height: 100%; width: 100%;">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>DnDConferenceWebChat</title>
+    <meta name="description"
+        content="Welcome to DnDConference a webconferencing tool to chat with friends and enemies over the world wide web. We created this, so you can play your favorite boardgames over the internet with additional features like the dice, despite the ongoing pendamic of COVID19.">
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bitter:400,700">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Pacifico">
+    <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
+    <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/fonts/ionicons.min.css">
+    <link rel="stylesheet" href="assets/fonts/fontawesome5-overrides.min.css">
+    <link rel="stylesheet" href="assets/css/Boostrap-Tabs.css">
+    <link rel="stylesheet" href="assets/css/Footer-Dark.css">
+    <link rel="stylesheet" href="assets/css/Header-Dark.css">
+    <link rel="stylesheet" href="assets/css/Navigation-Clean.css">
+    <link rel="stylesheet" href="assets/css/Sidebar-Menu-1.css">
+    <link rel="stylesheet" href="assets/css/Sidebar-Menu.css">
+    <link rel="stylesheet" href="assets/css/SIdebar-Responsive-2-1.css">
+    <link rel="stylesheet" href="assets/css/SIdebar-Responsive-2.css">
+    <link rel="stylesheet" href="assets/css/Team-Clean.css">
+</head>
+
+<body style="background-color: rgb(40,41,43);height: 100%; width: 100%;">
+    <div style="padding: 0px;height: 85%; width: 100%;">
+        <div style="height: 2%"></div>
+        <div class="container" style="height: 5%;"><a class="navbar-brand" href=""
+                style="font-family: Pacifico, cursive; text-align: center; background-color: transparent;color: white;"><strong>DnDConference</strong></a>
+        </div>
+
+        <div id="app" class="" style="height: 100%;width: 100%;">
+        </div>
+    </div>
+    <div class="footer-dark" style="background-color: transparent;height: 10%;" hidden>
+        <footer>
+            <div class="container">
+                <div class="row">
+                    <div class="col item social"><a href="https://www.hs-fulda.de/"><i
+                                class="icon ion-university"></i></a><a
+                            href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"><i
+                                class="far fa-grin-squint-tears"></i></a><a
+                            href="https://github.com/Model2TypeE/AdvMultimediaProject"><i
+                                class="icon ion-social-github"></i></a>
+                        <a href="#"><i class="fab fa-discord"></i></a>
+                    </div>
+                </div>
+                <p class="copyright">DnDConference © 2020. All Rights Reserved.<br></p>
+            </div>
+        </footer>
+    </div>
+
+
+    <!-- Including bootstrap js -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/js/Sidebar-Menu.js"></script>
+
+    <!-- Including bundled typescript for SimpleWebRTC -->
+    <script type="text/javascript" src="bundle.min.js"></script>
+
+    <!-- Interacting with SimpleWebRTC -->
+    <script type="text/javascript">
+        const roomName = 'derp';
+        SimpleWebRTC.run({ roomName });
+    </script>
+</body>
+
+</html>
