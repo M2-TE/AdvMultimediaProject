@@ -252,32 +252,32 @@ export default class Room extends React.Component<Props, State> {
                                                                                     <RS.DiceContainer>
                                                                                         <button onClick={() => {
                                                                                             const num = Math.floor((Math.random() * 4) + 1);
-                                                                                            chatProps.updateMessage(`${num}`);
+                                                                                            chatProps.updateMessage(`D4: ${num}`);
                                                                                             chatProps.sendMessage();
                                                                                         }}>D4</button>
                                                                                         <button onClick={() => {
                                                                                             const num = Math.floor((Math.random() * 6) + 1);
-                                                                                            chatProps.updateMessage(`${num}`);
+                                                                                            chatProps.updateMessage(`D6: ${num}`);
                                                                                             chatProps.sendMessage();
                                                                                         }}>D6</button>
                                                                                         <button onClick={() => {
                                                                                             const num = Math.floor((Math.random() * 8) + 1);
-                                                                                            chatProps.updateMessage(`${num}`);
+                                                                                            chatProps.updateMessage(`D8: ${num}`);
                                                                                             chatProps.sendMessage();
                                                                                         }}>D8</button>
                                                                                         <button onClick={() => {
                                                                                             const num = Math.floor((Math.random() * 10) + 1);
-                                                                                            chatProps.updateMessage(`${num}`);
+                                                                                            chatProps.updateMessage(`D10: ${num}`);
                                                                                             chatProps.sendMessage();
                                                                                         }}>D10</button>
                                                                                         <button onClick={() => {
                                                                                             const num = Math.floor((Math.random() * 12) + 1);
-                                                                                            chatProps.updateMessage(`${num}`);
+                                                                                            chatProps.updateMessage(`D12: ${num}`);
                                                                                             chatProps.sendMessage();
                                                                                         }}>D12</button>
                                                                                         <button onClick={() => {
                                                                                             const num = Math.floor((Math.random() * 20) + 1);
-                                                                                            chatProps.updateMessage(`${num}`);
+                                                                                            chatProps.updateMessage(`D20: ${num}`);
                                                                                             chatProps.sendMessage();
                                                                                         }}>D20</button>
                                                                                     </RS.DiceContainer>
