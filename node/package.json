@@ -15,7 +15,7 @@
 	"dependencies": {
 		"@andyet/simplewebrtc": "^1.23.0",
 		"@types/styled-components": "^4.4.3",
-		"async": "^3.2.0",
+		"async": "^3.2.2",
 		"awesome-typescript-loader": "^5.2.1",
 		"copy-webpack-plugin": "5.1.1",
 		"html-webpack-plugin": "^4.3.0",
